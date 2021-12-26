@@ -1,30 +1,75 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="main">
+    <div id="sidebar">
+    </div>
+    <div id="content">
+      <router-view/>
+    </div>
   </div>
-  <router-view/>
 </template>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap');
+
+
+* {
+  font-family: 'Roboto' !important;
+}
+
+body, html {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
+  width: 100%;
 }
 
-#nav {
-  padding: 30px;
+#main {
+  width: 100%;
+  height: 100%;
+  background-color: #f3f3f3;
+  display: flex;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#content {
+  width: 100%;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+#content .view {
+  margin-top: 40px;
+  margin-left: 50px;
 }
+
+#content .view  h1 {
+  text-align: left;
+  margin-bottom: 0px;
+}
+
+#content .view  h3 {
+  text-align: left;
+  margin-bottom: 40px;
+  color: rgb(85, 85, 85);
+  font-style: italic;
+}
+
+#sidebar {
+  background: #FFFFFF;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  width: 70px;
+  height: 100%;
+}
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <button @click="goToContainer(this.job.containerId, this.$route.params.name)" class="job__item">
+    <button @click="goToContainer(this.$route.params.templateUUID, this.job.containerId)" class="job__item">
       <p v-if="this.job.status == 'FINISH_SUCCESS'" class="job__item-field success">SUCCESS</p>
       <p v-if="this.job.status == 'RUNNING'" class="job__item-field run">RUNNING</p>
       <p class="job__item-field container">{{this.job.containerId}}</p>
@@ -15,8 +15,8 @@ export default defineComponent({
       job: Object
   },
   methods: {
-    goToContainer(containerId: string, name: string) {
-      this.$router.push({ path: `/job/${name}/${containerId}` });
+    goToContainer(templateUUID: string, containerId: string) {
+      this.$router.push({ path: `/templates/${templateUUID}/job/${containerId}` });
     }
   }
 });

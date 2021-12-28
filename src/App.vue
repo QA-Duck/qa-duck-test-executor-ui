@@ -1,6 +1,11 @@
 <template>
   <div id="main">
     <div id="sidebar">
+      <ul class="sidebar__nav">
+        <li class="nav__item">
+          <p @click="this.$router.push('/')">T</p>
+        </li>
+      </ul>
     </div>
     <div id="content">
       <router-view/>
@@ -17,10 +22,47 @@
   font-family: 'Roboto' !important;
 }
 
+ul, li {
+  text-decoration: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 body, html {
   height: 100%;
   padding: 0;
   margin: 0;
+}
+
+.sidebar__nav {
+  margin-top: 40px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav__item {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #84C17A;
+  transition: all 0.3s;
+}
+
+.nav__item:hover {
+    background: #6a9e61;
+  }
+
+.nav__item p{
+  color: #f3f3f3;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  font-size:28px;
+  font-size:28px;
+  margin: 0px;
 }
 
 p {

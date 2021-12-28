@@ -1,10 +1,9 @@
 <template>
   <div class="view">
     <div class="collect">
-       <h1>{{this.$route.params.name}}  </h1>
-       <button class="run" @click="run()">RUN</button>
+       <h1>{{this.template.name}}</h1>
+       <button class="run" @click="run()">Execute</button>
     </div>
-   
     <div class="jobs">
       <JobItem v-for="job in jobs" :key="job" :job="job"/>
     </div>
@@ -23,28 +22,20 @@ export default defineComponent({
   },
   data() {
     return { 
+      template: {},
       jobs: []
     }
   },
   methods: {
     run() {
-      executionClient.runTest({
-        projectName: this.$route.params.projectName,
-        environments: {
-          ENV: "staging"
-        }
-      })
-      .then(res => {
-        res.json().then(data => {
-          alert(JSON.stringify(data))
-        })
+      executionClient.runTest(this.$route.params.templateUUID).then((data) => {
+        console.log(data);
       })
     }
   },
   beforeMount() {
-    executionClient.getJobs(this.$route.params.projectName).then(data => {
-      this.jobs = data;
-    });
+    this.template = executionClient.getTemplatesFromStorageByUUID(this.$route.params.templateUUID);
+    executionClient.getJobs(this.$route.params.templateUUID).then(data => { this.jobs = data; });
   }
 });
 </script>

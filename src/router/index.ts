@@ -10,12 +10,12 @@ const routes: Array<RouteRecordRaw> = [
     component: Templates
   },
   {
-    path: '/jobs/:projectName/:name',
+    path: '/templates/:templateUUID/jobs',
     name: 'jobs',
     component: Jobs,
   },
   {
-    path: '/job/:name/:containerId',
+    path: '/templates/:templateUUID/job/:containerId',
     name: 'job',
     component: Job,
   },

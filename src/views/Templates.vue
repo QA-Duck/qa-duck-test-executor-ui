@@ -5,33 +5,33 @@
      <div v-for="template in templatesListData" :key="template.uid" class="template">
        <div class="template-info">
          <p class="template-name">{{template.name}}</p>
-         <p class="template-project">{{template.projectName}}</p>
+         <p class="template-project">{{template.gitProject}}</p>
        </div>
-       <button class="go" @click="this.run(template.projectName, template.name)">Go</button>
+       <button class="go" @click="this.goToJobs(template.uid)">Go</button>
      </div>
    </div>
   </div>
 </template>
  
 <script lang="ts">
+import executionClient from '@/client/TestExecutionClient';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Templates',
   data() {
     return {
-      templatesListData: [{
-        name: "Marketplace (staging)",
-        projectName: "mpl-api-test",
-        environments: {
-          ENV: "staging"
-        }
-      }]
+      templatesListData: []
     }
   },
+  mounted() {
+    executionClient.getTemplates().then(data => {
+      this.templatesListData = data;
+    })
+  },
   methods: {
-    run(projectName: string, name: string) {
-      this.$router.push({ path: `/jobs/${projectName}/${name}` });
+    goToJobs(templateUUID: string) {
+      this.$router.push({ path: `/templates/${templateUUID}/jobs` });
     }
   }
 });
@@ -41,11 +41,14 @@ export default defineComponent({
   .template-list {
     margin-top: 40px;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: flex-start;
   }
 
   .template {
+    margin-bottom: 20px;
+    margin-right: 20px;
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -77,6 +77,7 @@ export default defineComponent({
   border: none;
   max-width: 200px;
   padding: 8px;
+  font-size: 14px;
   margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -84,6 +85,7 @@ export default defineComponent({
 
 .refresh {
   margin-right: 10px;
+  font-size: 14px;
   background-color: rgb(58, 94, 173);
   color: white;
   border: none;

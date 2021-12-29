@@ -7,6 +7,19 @@ class TestExecutionClient {
     public async runTest (templateUUID: any) {
         return await fetch(`${this.url}/templates/${templateUUID}/run`, {method: 'POST'})
     }
+    
+    public async create(template: any) {
+        return await fetch(
+            `${this.url}/templates`,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(template)
+            }
+        )
+    }
 
     public async getTemplates() {
         const response = await fetch(`${this.url}/templates`);

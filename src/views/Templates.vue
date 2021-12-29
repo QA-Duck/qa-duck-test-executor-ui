@@ -1,6 +1,7 @@
 <template>
   <div class="view">
     <h1>Templates</h1>
+    <button @click="this.create()">create</button>
     <div class="template-list">
      <div v-for="template in templatesListData" :key="template.uid" class="template">
        <div class="template-info">
@@ -32,6 +33,17 @@ export default defineComponent({
   methods: {
     goToJobs(templateUUID: string) {
       this.$router.push({ path: `/templates/${templateUUID}/jobs` });
+    },
+    create() {
+      executionClient.create({
+        "name": "marketplace (staging) junit",
+        "gitProject": "mpl-api-test",
+        "testType": "JUNIT",
+        "environments": {
+            "ENV": "staging",
+            "ADDITIONAL_KEYS": "--tests \"ru.sravni.ru.RegistrationClientTest\" -i"
+        }
+    })
     }
   }
 });

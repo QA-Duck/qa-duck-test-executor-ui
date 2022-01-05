@@ -1,6 +1,6 @@
 class TestExecutionClient {
 
-    public url = "http://localhost:8081";
+    public url = "http://localhost:5001";
     private TEMPLATES_KEY = "templates";
     private JOB_KEYS = "jobs";
 

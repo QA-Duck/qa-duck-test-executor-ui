@@ -1,12 +1,15 @@
-import { createStore } from 'vuex'
+// index.ts
+import { StoreOptions, createStore } from 'vuex';
+import { RootState } from './types';
+import { templates } from './modules/templates';
 
-export default createStore({
+const storeOptions: StoreOptions<RootState> = {
   state: {
-  },
-  mutations: {
-  },
-  actions: {
+    version: '1.0.0',
   },
   modules: {
-  }
-})
+    templates,
+  },
+};
+
+export default createStore(storeOptions);

@@ -1,11 +1,16 @@
 class TestExecutionClient {
 
-    public url = "http://localhost:8081";
+    public url =  process.env.VUE_APP_API_URL;
     private TEMPLATES_KEY = "templates";
     private JOB_KEYS = "jobs";
 
     public async runTest (templateUUID: any) {
-        return await fetch(`${this.url}/templates/${templateUUID}/run`, {method: 'POST'})
+
+        const controller = new AbortController()
+
+        const timeoutId = setTimeout(() => controller.abort(), 20000)
+
+        return await fetch(`${this.url}/templates/${templateUUID}/run`, {signal: controller.signal, method: 'POST'})
     }
     
     public async create(template: any) {

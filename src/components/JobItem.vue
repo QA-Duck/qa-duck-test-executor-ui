@@ -2,6 +2,8 @@
     <button @click="goToContainer(this.$route.params.templateUUID, this.job.containerId)" class="job__item">
       <p v-if="this.job.status == 'FINISH_SUCCESS'" class="job__item-field success">SUCCESS</p>
       <p v-if="this.job.status == 'RUNNING'" class="job__item-field run">RUNNING</p>
+      <p v-if="this.job.status == 'PENDING'" class="job__item-field pending">PENDING</p>
+      <p v-if="this.job.status == 'ERROR'" class="job__item-field error">ERROR</p>
       <p class="job__item-field container">{{this.job.containerId}}</p>
     </button>
 </template>
@@ -35,6 +37,14 @@ export default defineComponent({
 
 .run {
   color: rgb(40, 98, 146);
+}
+
+.pending {
+  color: rgb(73, 73, 73);
+}
+
+.error {
+  color: rgb(163, 45, 45);
 }
 
 .job__item {

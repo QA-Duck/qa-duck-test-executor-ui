@@ -17,6 +17,8 @@ import { useStore } from 'vuex'
 import { templateKey } from '@/store/modules/templates'
 import JobItem from '@/components/JobItem.vue';
 import executionClient from '@/client/TestExecutionClient'
+import Job from '@/store/models/job';
+import TemplateItem from '@/store/models/template-item';
 
 export default defineComponent({
   name: 'Jobs',
@@ -28,7 +30,7 @@ export default defineComponent({
   data() {
     return {
       executeLoading: false,
-      template: {},
+      template: new TemplateItem("", "", ""),
       templatesStore: useStore(templateKey),
     }
   },
@@ -38,7 +40,9 @@ export default defineComponent({
     run() {
       this.executeLoading = true;
       executionClient.runTest(this.$route.params.templateUUID).then((data) => {
-        console.log(data);
+        if(data != null) {
+          console.log("TEST")
+        }
       }).catch((err) => {
         alert("Не удалось запустить процесс, попробуйте снова !")
       }).finally(() => {
@@ -59,6 +63,9 @@ export default defineComponent({
     },
 
     setTemplate(template: any) {
+      template.jobs.sort(function(o1: any, o2: any) {
+        return Date.parse(o2.startJobTime) - Date.parse(o1.startJobTime);
+      })
       this.template = template
     },
 
@@ -70,7 +77,6 @@ export default defineComponent({
  
     setTemplateWithCheckJobs() {
       let findingTemplate = this.getTemplate();
-      console.log(findingTemplate);
       if (findingTemplate == null) {
         this.setWithRequest();
       } else {
@@ -78,6 +84,8 @@ export default defineComponent({
       }
     }
   },
+
+
 
   mounted() {
     this.setTemplateWithCheckJobs();
@@ -91,31 +99,6 @@ export default defineComponent({
 .load {
   background: grey !important;
   cursor: progress !important;
-}
-
-.collect {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.collect h1{ 
-  margin: 0px;
-}
-
-.run {
-    background: #64925d;
-    color:rgb(230, 230, 230);
-    width: 100px;
-    margin-left: 20px;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 5px;
-    border: 0;
-    box-shadow: 0px 0px 12px rgba(162, 162, 162, 0.25);
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all 0.3s;
 }
 
 .run:hover {

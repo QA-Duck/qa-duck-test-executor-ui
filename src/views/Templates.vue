@@ -1,14 +1,30 @@
 <template>
   <div class="view">
-    <h1>Templates</h1>
+    <ModalCreateTemplate></ModalCreateTemplate>
+    <ModalDeleteTemplate></ModalDeleteTemplate>
+    <div class="collect">
+       <h1>Templates</h1>
+       <button @click="this.openModal()" class="run" >Добавить</button>
+    </div>
     <div class="template-list">
-     <div v-for="template in this.templatesStore.state.templatesList" 
-     :key="template.uid" class="template">
+     <div v-for="template in this.templatesStore.state.templatesList" :key="template.uid" class="template">
+
        <div class="template-info">
          <p class="template-name">{{template.name}}</p>
          <p class="template-project">{{template.gitProject}}</p>
        </div>
-       <button class="go" @click="this.goToJobs(template.uid)">Go</button>
+
+       <div class="environment__window">
+          <div v-for="(env, index) in Object.keys(template.environments)" :key="index" class="environment__field">
+              <input :value="env" type="text" disabled>
+              <input :value="template.environments[env]" type="text" disabled>
+          </div>
+      </div>
+
+      <div class="tools">
+        <button class="go" @click="this.goToJobs(template.uid)">Jobs</button>
+        <button class="del" @click="this.removeTemplate(template.uid)">Remove</button>
+      </div>
      </div>
    </div>
   </div>
@@ -18,13 +34,22 @@
 import { useStore } from 'vuex'
 import { templateKey } from '@/store/modules/templates'
 import { defineComponent } from 'vue';
+import ModalCreateTemplate from '@/components/ModalCreateTemplate.vue'
+import ModalDeleteTemplate from '@/components/ModalDeleteTemplate.vue'
+import { modalKey } from '@/store/modules/modal';
 
 export default defineComponent({
   name: 'Templates',
 
+  components: {
+    ModalCreateTemplate,
+    ModalDeleteTemplate,
+  },
+
   data() {
     return {
       templatesStore: useStore(templateKey),
+      modalStore: useStore(modalKey),
     }
   },
 
@@ -33,15 +58,23 @@ export default defineComponent({
   },
 
   methods: {
+    openModal() {
+      this.modalStore.dispatch('openModal');
+    },
+
     goToJobs(templateUUID: string) {
       this.$router.push({ path: `/templates/${templateUUID}/jobs` });
     },
+
+    removeTemplate(templateUuid: string) {
+      this.modalStore.dispatch('openDeleteModal', templateUuid);
+    }
   }
 
 });
 </script>
 
-<style scoped>
+<style>
   .template-list {
     margin-top: 40px;
     display: flex;
@@ -82,11 +115,12 @@ export default defineComponent({
     border-radius: 5px;
   }
 
-  .template .go {
+  .go {
+    margin-top: 20px;
     color:white;
-    width: 100px;
+    width: 100%;
     font-size: 16px;
-    padding: 10px;
+    padding: 5px;
     border: 0;
     background: #84C17A;
     box-shadow: 0px 0px 12px rgba(162, 162, 162, 0.25);
@@ -112,8 +146,28 @@ export default defineComponent({
   }
 
   .template-project {
+    margin-bottom: 20px;
     font-size: 14px;
     font-weight: 500;
     text-align: left;
+  }
+
+  .tools {
+    display: flex;
+  }
+
+  .del {
+    margin-top: 20px;
+    color:white;
+    font-size: 16px;
+    width: 100%;
+    padding: 5px;
+    border: 0;
+    margin-left: 10px;
+    background: #ac6064;
+    box-shadow: 0px 0px 12px rgba(162, 162, 162, 0.25);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
   }
 </style>

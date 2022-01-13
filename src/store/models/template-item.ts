@@ -5,7 +5,6 @@ export default class TemplateItem {
     gitProject: string;
     name: string;
     uid: string;
-
     jobs: Array<Job>
 
     constructor(gitProject: string, name: string, uid: string) {

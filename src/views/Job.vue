@@ -34,7 +34,6 @@ export default defineComponent({
    executionClient.getJobs(this.$route.params.templateUUID).then((result) => {
       this.template = executionClient.getTemplatesFromStorageByUUID(this.$route.params.templateUUID);
       this.job = executionClient.getJobFromStorageByContainerId(this.$route.params.containerId);
-      console.log(this.job);
    })
    this.url = executionClient.url;
   },

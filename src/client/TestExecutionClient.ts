@@ -26,6 +26,12 @@ class TestExecutionClient {
         )
     }
 
+    public async remove(templateUUID: string) {
+        return await fetch(
+            `${this.url}/templates/remove/${templateUUID}`, {method: "DELETE"}
+        )
+    }
+
     public async getTemplates() {
         const response = await fetch(`${this.url}/templates`);
         const data = await response.json();

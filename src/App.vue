@@ -17,6 +17,30 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap');
 
+.run {
+    background: #64925d;
+    color:rgb(230, 230, 230);
+    width: 100px;
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px;
+    border: 0;
+    box-shadow: 0px 0px 12px rgba(162, 162, 162, 0.25);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.collect {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.collect h1{ 
+  margin: 0px;
+}
 
 * {
   font-family: 'Roboto' !important;

@@ -10,7 +10,13 @@ class TestExecutionClient {
 
         const timeoutId = setTimeout(() => controller.abort(), 20000)
 
-        return await fetch(`${this.url}/templates/${templateUUID}/run`, {signal: controller.signal, method: 'POST'})
+        return await fetch(`${this.url}/templates/${templateUUID}/run`, {
+            signal: controller.signal,
+            method: 'POST',
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+        })
     }
     
     public async create(template: any) {
@@ -19,7 +25,8 @@ class TestExecutionClient {
             {
                 method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 },
                 body: JSON.stringify(template)
             }
@@ -28,19 +35,32 @@ class TestExecutionClient {
 
     public async remove(templateUUID: string) {
         return await fetch(
-            `${this.url}/templates/remove/${templateUUID}`, {method: "DELETE"}
+            `${this.url}/templates/remove/${templateUUID}`, {
+                method: "DELETE",
+                headers: {
+                    "Access-Control-Allow-Origin": "*"
+                },
+            }
         )
     }
 
     public async getTemplates() {
-        const response = await fetch(`${this.url}/templates`);
+        const response = await fetch(`${this.url}/templates`, {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+        });
         const data = await response.json();
         localStorage.setItem(this.TEMPLATES_KEY, JSON.stringify(data));
         return data;
     }
 
     public async getJobs(templateUUID: any) {
-        const response = await fetch(`${this.url}/templates/${templateUUID}/jobs`);
+        const response = await fetch(`${this.url}/templates/${templateUUID}/jobs`, {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+        });
         const data = await response.json();
         localStorage.setItem(this.JOB_KEYS, JSON.stringify(data));
         return data;
@@ -71,7 +91,11 @@ class TestExecutionClient {
     }
 
     public async getLogs(containerId: any) {
-        const response = await fetch(`${this.url}/container/logs/${containerId}/file`);
+        const response = await fetch(`${this.url}/container/logs/${containerId}/file`, {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+        });
         return await response.json();
     }
 
